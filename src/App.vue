@@ -4,8 +4,8 @@
     <!-- <h1>{{titulo}}</h1> -->
 
     <ul>
-      <li v-for="x of fotos">
-        <img :src="x.url" :alt="x.titulo" />
+      <li v-for="x of fotosArray">
+        <img v-bind:src="x.url" v-bind:alt="x.titulo" />
       </li>
     </ul>
   </div>
@@ -16,17 +16,17 @@ export default {
   data() {
     return {
       titulo: "Alurapic",
-      fotos: [
-        {
-          url: "https://conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_900x506.jpg.webp",
-          titulo: "cachorro",
-        },
-        {
-          url: "https://conteudo.imguol.com.br/c/entretenimento/54/2020/04/28/cachorro-pug-1588098472110_v2_900x506.jpg.webp",
-          titulo: "cachorrao",
-        },
-      ],
+      fotosArray: [],
     };
+  },
+  created() {
+    this.$http
+      .get("http://localhost:3000/v1/fotos")
+      .then((res) => res.json())
+      .then(
+        (qualquerNome) => (this.fotosArray = qualquerNome),
+        (err) => console.log(err)
+      );
   },
 };
 </script>
