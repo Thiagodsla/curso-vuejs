@@ -1,18 +1,19 @@
 <template>
 <div class="corpo">
-    <nav>
-      <li v-for="(route, idx) in routes" :key="idx">
-        <router-link :to="route.path ? route.path: '/' "> {{route.titulo}} </router-link>
-      </li> 
-    </nav>
-  <router-view></router-view>
+   <meu-menu :rotas="routes"/>
+    <transition name="pagina">
+      <router-view></router-view>
+    </transition>
 </div>
 </template>
 
 <script>
 import { routes } from './routes';
+import Menu from './components/shared/menu/Menu.vue'
 export default {
-
+  components: {
+    'meu-menu' : Menu
+  },
   data(){
     return{
       routes
@@ -27,5 +28,14 @@ export default {
   font-family: Helvetica, sans-serif;
   width: 96%;
   margin: 0, auto;
+}
+.pagina-enter,
+.pagina-leave-active {
+  opacity: 0;
+}
+
+.pagina-enter-active,
+.pagina-leave-active {
+  transition: opacity 1s;
 }
 </style>
