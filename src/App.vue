@@ -1,35 +1,31 @@
 <template>
-  <div>
-    <h1 v-text="titulo"></h1>
-    <!-- <h1>{{titulo}}</h1> -->
-
-    <ul>
-      <li v-for="x of fotosArray">
-        <img v-bind:src="x.url" v-bind:alt="x.titulo" />
-      </li>
-    </ul>
-  </div>
+<div class="corpo">
+    <nav>
+      <li v-for="(route, idx) in routes" :key="idx">
+        <router-link :to="route.path ? route.path: '/' "> {{route.titulo}} </router-link>
+      </li> 
+    </nav>
+  <router-view></router-view>
+</div>
 </template>
 
 <script>
+import { routes } from './routes';
 export default {
-  data() {
-    return {
-      titulo: "Alurapic",
-      fotosArray: [],
-    };
-  },
-  created() {
-    this.$http
-      .get("http://localhost:3000/v1/fotos")
-      .then((res) => res.json())
-      .then(
-        (qualquerNome) => (this.fotosArray = qualquerNome),
-        (err) => console.log(err)
-      );
-  },
+
+  data(){
+    return{
+      routes
+    }
+  }
+
 };
 </script>
 
 <style>
+.corpo {
+  font-family: Helvetica, sans-serif;
+  width: 96%;
+  margin: 0, auto;
+}
 </style>
