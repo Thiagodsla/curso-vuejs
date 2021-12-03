@@ -7,7 +7,10 @@
   <ul class="lista-fotos">
     <li class="lista-fotos-item" v-for="(aquiUmNomeQualquer, idx) of fotosComFiltro" :key="idx">
       <meu-painel :titulo="aquiUmNomeQualquer.titulo">
-        <imagem-responsiva :url="aquiUmNomeQualquer.url" :titulo="aquiUmNomeQualquer.titulo"/>
+
+        <imagem-responsiva :url="aquiUmNomeQualquer.url" :titulo="aquiUmNomeQualquer.titulo" />
+
+        <meu-botao tipo="button" rotulo="REMOVER" @botaoAtivado="remove(aquiUmNomeQualquer)" estilo= '' :confirmacao= "true"/>
         <!-- <img class="imagem-responsiva" v-bind:src="aquiUmNomeQualquer.url" v-bind:alt="aquiUmNomeQualquer.titulo" /> -->
       </meu-painel>
     </li>
@@ -18,10 +21,13 @@
 <script>
 import Painel from "../shared/painel/painel.vue";
 import ImagemResponsiva from "../shared/imagem-responsiva/ImagemResponsiva.vue"
+import Botao from "../shared/botao/Botao.vue"
+
 export default {
   components: {
     'meu-painel': Painel,
-    'imagem-responsiva': ImagemResponsiva
+    'imagem-responsiva': ImagemResponsiva,
+    'meu-botao': Botao
   },
   data() {
     return {
@@ -41,6 +47,14 @@ export default {
       }
     },
   },
+
+  methods: {
+    remove(aquiUmNomeQualquer) {
+      alert('remover a foto ' + aquiUmNomeQualquer.titulo)
+
+    }
+  },
+
   created() {
     this.$http
       .get("http://localhost:3000/v1/fotos")
@@ -53,7 +67,6 @@ export default {
 </script>
 
 <style>
-
 .centralizado {
   text-align: center;
 }
